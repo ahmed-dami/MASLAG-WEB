@@ -1,0 +1,66 @@
+{% extends 'base2.html.twig' %}
+{% block title %}Product index{% endblock %}
+{% block body %}
+    <h1>Product</h1>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_p</th>
+                <th>Marque_p</th>
+                <th>Prix_p</th>
+                <th>Quantite_p</th>
+                <th>categroy</th>
+                <th>IMG_p</th>
+                <th>show</th>
+                <th>edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.NomP }}</td>
+                <td>{{ product.MarqueP }}</td>
+                <td>{{ product.PrixP }}</td>
+                <td>{{ product.QuantiteP }}</td>
+                <td>{{ product.categorie }}</td>
+                <td><img src="{{asset( product.IMGP )}}"></td>
+                <td>
+                    <a class="fa fa-bars" href="{{ path('product_controllers_show', {'id': product.id}) }}"></a>
+                </td>
+                <td><a class="fa fa-edit" href="{{ path('product_controllers_edit', {'id': product.id}) }}"></a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="user-panel">
+    <a class="fa fa-plus" href="{{ path('product_controllers_new') }}"></a>
+</div>
+<div class="user-panel">
+    <a href="{{ path('category_controllers_index') }}">Category</a>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

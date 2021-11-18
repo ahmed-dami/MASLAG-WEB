@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block title %}Product index{% endblock %}
+{% block body %}
+    <h1 style="color: #c69500">Product</h1>
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background-image: url('')">
+<div class="container">
+    <table class="table table-hover">
+        <thead style="color: #c69500" >
+            <tr style="color: #c69500">
+
+                <th style="color: #c69500">Nom_p</th>
+                <th style="color: #c69500">Marque_p</th>
+                <th style="color: #c69500">Prix_p</th>
+                <th style="color: #c69500">Quantite_p</th>
+                <th style="color: #c69500">categroy</th>
+                <th style="color: #c69500">IMG_p</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+
+                <td>{{ product.NomP }}</td>
+                <td>{{ product.MarqueP }}</td>
+                <td>{{ product.PrixP }}</td>
+                <td>{{ product.QuantiteP }}</td>
+                <td>{{ product.categorie }}</td>
+                <td><img src="{{asset( product.IMGP )}}"></td>
+                <td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </body>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
