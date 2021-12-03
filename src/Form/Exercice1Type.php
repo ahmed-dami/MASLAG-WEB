@@ -6,6 +6,9 @@ use App\Entity\Exercice;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class Exercice1Type extends AbstractType
 {
@@ -16,6 +19,7 @@ class Exercice1Type extends AbstractType
             ->add('numSer')
             ->add('numRep')
             ->add('categorie')
+            ->add('imageFile',FileType::class, array('data_class' => null))
         ;
     }
 

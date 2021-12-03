@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block title %}Exercice index{% endblock %}
 
 {% block body %}
     <h1>Exercice </h1>
+
 
     <table class="table">
         <thead>
@@ -13,7 +14,9 @@
                 <th>CatEx</th>
                 <th>NumSer</th>
                 <th>NumRep</th>
-                <th>actions</th>
+                <th>img</th>
+                <th>show</th>
+                <th>edit</th>
             </tr>
         </thead>
         <tbody>
@@ -24,10 +27,15 @@
                 <td>{{ exercice.categorie }}</td>
                 <td>{{ exercice.numSer }}</td>
                 <td>{{ exercice.numRep }}</td>
+                <td>{{ exercice.numRep }}</td>
+                <td><img src="{{vich_uploader_asset(exercice, 'imageFile')}}" ></td>
+
+
+
                 <td>
-                    <a href="{{ path('exercice_show', {'idEx': exercice.idEx}) }}">show</a>
-                    <a href="{{ path('exercice_edit', {'idEx': exercice.idEx}) }}">edit</a>
+                    <a class="fa fa-bars" href="{{ path('exercice_show', {'idEx': exercice.idEx}) }}"></a>
                 </td>
+                <td><a class="fa fa-edit" href="{{ path('exercice_edit', {'idEx': exercice.idEx}) }}"></a></td>
 
             </tr>
         {% else %}
@@ -35,6 +43,7 @@
                 <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
+        {{ knp_pagination_render(exercices) }}
         </tbody>
     </table>
 

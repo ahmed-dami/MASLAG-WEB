@@ -2,94 +2,112 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
- * User
- *
- * @ORM\Table(name="user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="Id_User", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $idUser;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Nom_User", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $nomUser;
+    private $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Prenom_User", type="string", length=255, nullable=false)
+     * @ORM\Column(type="json")
      */
-    private $prenomUser;
+    private $roles = [];
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="Cin_User", type="integer", nullable=false)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private $cinUser;
+    private $password;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
-     * @var int
+     * A visual identifier that represents this user.
      *
-     * @ORM\Column(name="Num_User", type="integer", nullable=false)
+     * @see UserInterface
      */
-    private $numUser;
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Adresse_User", type="string", length=255, nullable=false)
+     * @see UserInterface
      */
-    private $adresseUser;
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Email_User", type="string", length=255, nullable=false)
+     * @see UserInterface
      */
-    private $emailUser;
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 
     /**
-     * @var string
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
      *
-     * @ORM\Column(name="Role_User", type="string", length=255, nullable=false)
+     * @see UserInterface
      */
-    private $roleUser;
+    public function getSalt(): ?string
+    {
+        return null;
+    }
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Date_N_User", type="string", length=255, nullable=false)
+     * @see UserInterface
      */
-    private $dateNUser;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Password_user", type="string", length=255, nullable=false)
-     */
-    private $passwordUser;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Image_User", type="string", length=255, nullable=false, options={"default"="C:\\Users\\lenovo\\Documents\\NetBeansProjects\\MASLAG-Project\\src\\images\\profile.png"})
-     */
-    private $imageUser = 'C:\\\\Users\\\\lenovo\\\\Documents\\\\NetBeansProjects\\\\MASLAG-Project\\\\src\\\\images\\\\profile.png';
-
-
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

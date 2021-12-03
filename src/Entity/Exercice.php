@@ -3,13 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
 
 /**
  * Exercice
  *
  * @ORM\Table(name="exercice")
  * @ORM\Entity
+ * @Vich\Uploadable()
  */
 class Exercice
 {
@@ -21,6 +27,7 @@ class Exercice
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idEx;
+
 
     /**
      * @var string
@@ -54,6 +61,62 @@ class Exercice
 
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="filename")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+
+
+    /**
+     * @param null|File $imageFile
+     * @return exercice
+     */
+    public function setImageFile(?File $imageFile):exercice
+    {
+        $this->imageFile = $imageFile;
+        if($this->imageFile instanceof UploadedFile){
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return exercice
+     */
+    public function setFilename(?string $filename): exercice
+    {
+        $this->filename = $filename;
+        return  $this;
+    }
+
+
+    /**
      * @return int
      */
     public function getIdEx(): ?int
@@ -84,8 +147,6 @@ class Exercice
     {
         $this->nomEx = $nomEx;
     }
-
-
 
     /**
      * @return int
@@ -132,8 +193,17 @@ class Exercice
     }
 
 
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updated_at;
+    }
 
+    public function setUpdatedAt(\DateTime $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
+        return $this;
+    }
 
 
 }

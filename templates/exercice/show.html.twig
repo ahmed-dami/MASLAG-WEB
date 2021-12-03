@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block title %}Exercice{% endblock %}
 
@@ -26,6 +26,10 @@
             <tr>
                 <th>NumRep</th>
                 <td>{{ exercice.numRep }}</td>
+            </tr>
+            <tr>
+                <th>img</th>
+                <td><img src="{{vich_uploader_asset(exercice, 'imageFile')}}" ></td>
             </tr>
         </tbody>
     </table>

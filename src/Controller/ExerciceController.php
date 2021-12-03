@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+
 
 /**
  * @Route("/exercice")
@@ -17,13 +21,32 @@ class ExerciceController extends AbstractController
     /**
      * @Route("/", name="exercice_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
+    {
+        $donnees = $this->getDoctrine()
+            ->getRepository(Exercice::class)
+            ->findAll();
+
+        $exercices = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            3 // Nombre de résultats par page
+        );
+
+        return $this->render('exercice/index.html.twig', [
+            'exercices' => $exercices,
+        ]);
+    }
+    /**
+     * @Route("/1", name="exercice_index1", methods={"GET"})
+     */
+    public function index1(): Response
     {
         $exercices = $this->getDoctrine()
             ->getRepository(Exercice::class)
             ->findAll();
 
-        return $this->render('exercice/index.html.twig', [
+        return $this->render('exercice/index1.html.twig', [
             'exercices' => $exercices,
         ]);
     }
