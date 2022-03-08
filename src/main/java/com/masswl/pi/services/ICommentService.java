@@ -5,7 +5,7 @@ import java.util.List;
 import com.masswl.pi.entities.Comment;
 
 
-
+//test
 
 public interface ICommentService {
 	 public void ajouterEtaffecterListeComment(Comment comment, Long idPost,Long idUser);	 
